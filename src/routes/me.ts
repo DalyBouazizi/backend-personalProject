@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { requireAuth } from "../auth/requireAuth.js";
 import { db } from "../db/client.js";
-import { userProfiles, userItems } from "../db/schema.js";
+import { userProfiles, userItems, userRoles } from "../db/schema.js";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -18,8 +18,13 @@ router.get("/", requireAuth, async (req, res) => {
     .select()
     .from(userItems)
     .where(eq(userItems.userId, user.id));
+  const roleRow = await db
+    .select()
+    .from(userRoles)
+    .where(eq(userRoles.userId, user.id));
+  const role = roleRow[0]?.role ?? "user";
 
-  res.json({ user, profile: profile[0] ?? null, items });
+  res.json({ user, role, profile: profile[0] ?? null, items });
 });
 
 router.put("/profile", requireAuth, async (req, res) => {

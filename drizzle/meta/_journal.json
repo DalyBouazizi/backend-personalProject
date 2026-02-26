@@ -15,6 +15,20 @@
       "when": 1772059399433,
       "tag": "0001_wide_mandrill",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1772098850800,
+      "tag": "0002_outgoing_wonder_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1772099287245,
+      "tag": "0003_bent_lily_hollister",
+      "breakpoints": true
     }
   ]
 }
