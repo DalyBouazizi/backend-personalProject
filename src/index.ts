@@ -7,6 +7,7 @@ import { auth } from "./auth/betterAuth.js";
 import { arcjetMiddleware } from "./arcjet/aj.js";
 import usersRouter from "./routes/users.js";
 import meRouter from "./routes/me.js";
+import userProfilesRouter from "./routes/user-Profiles.js";
 
 const app = express();
 if (!process.env.FRONTEND_URL) {
@@ -29,6 +30,7 @@ app.all("/api/auth/*path", toNodeHandler(auth));
 
 app.use("/api/users", usersRouter);
 app.use("/api/me", meRouter);
+app.use("/api/user-profiles", userProfilesRouter);
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });

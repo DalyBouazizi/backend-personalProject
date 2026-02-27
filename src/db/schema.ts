@@ -55,6 +55,9 @@ export const verification = pgTable("verification", {
 export const userProfiles = pgTable("user_profiles", {
   userId: text("user_id").primaryKey(),
   fullName: text("full_name").notNull().default(""),
+  age: text("age").notNull().default(""),
+  bio: text("bio").notNull().default(""),
+  adress: text("adress").notNull().default(""),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

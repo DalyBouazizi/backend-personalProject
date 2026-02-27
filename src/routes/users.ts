@@ -16,7 +16,7 @@ router.get("/", requireAuth, requireRole("admin"), async (req, res) => {
 
   // Get all users
   const users = await db.select().from(user).limit(limit).offset(start);
-  
+
   // Get total count for Content-Range header
   const totalResult = await db.select().from(user);
   const total = totalResult.length;
@@ -38,22 +38,25 @@ router.get("/", requireAuth, requireRole("admin"), async (req, res) => {
   // Set Content-Range header for Refine pagination
   res.set("Content-Range", `users ${start}-${end}/${total}`);
   res.set("Access-Control-Expose-Headers", "Content-Range");
-  
+
   res.json(usersWithRoles);
 });
 
 //get single user
 router.get("/:id", requireAuth, requireRole("admin"), async (req, res) => {
   const userId = req.params.id as string;
-  
+
   const [foundUser] = await db.select().from(user).where(eq(user.id, userId));
-  
+
   if (!foundUser) {
     return res.status(404).json({ error: "User not found" });
   }
 
-  const [roleData] = await db.select().from(userRoles).where(eq(userRoles.userId, userId));
-  
+  const [roleData] = await db
+    .select()
+    .from(userRoles)
+    .where(eq(userRoles.userId, userId));
+
   res.json({
     id: foundUser.id,
     name: foundUser.name,
